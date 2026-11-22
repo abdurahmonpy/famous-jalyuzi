@@ -78,6 +78,7 @@ input[type=checkbox]{width:auto}
 <div class="top"><div class="top__in">
   <h1 style="display:flex;align-items:center;gap:10px"><img src="../images/logo.png" alt="" style="height:34px">Famous Jalyuzi · Admin</h1>
   <span class="st" id="st">Yuklanmoqda...</span>
+  <button class="btn btn--ghost" id="bGh">🔗 GitHub</button>
   <button class="btn btn--ghost" id="bConnect">📁 Papkani ulash</button>
   <button class="btn btn--ghost" id="bPreview">👁 Saytda ko'rish</button>
   <button class="btn btn--ghost" id="bDownload" title="data.json faylini yuklab olish">⬇ data.json</button>
@@ -165,6 +166,19 @@ input[type=checkbox]{width:auto}
   </form>
 </div></div>
 
+<div class="dlg" id="dGh"><div class="dlg__b">
+  <h2>GitHub orqali saqlash</h2>
+  <p class="muted" style="margin-top:-6px">Shu ulansa, internetdagi admin paneldan «Saqlash» bosilganda o'zgarishlar GitHub'ga yoziladi va sayt (Vercel / GitHub Pages) 1–2 daqiqada o'zi yangilanadi. Token faqat shu brauzerda saqlanadi.</p>
+  <form class="form" id="ghForm">
+    <label>Repo<input name="repo" placeholder="abdurahmonpy/famous-jalyuzi" required></label>
+    <label>Branch<input name="branch" placeholder="main"></label>
+    <label>GitHub token<input name="token" type="password" autocomplete="off" placeholder="github_pat_..." required></label>
+    <p class="muted" style="font-size:13px;margin:0">Token olish: GitHub → Settings → Developer settings → <b>Fine-grained tokens</b> → Generate. «Repository access»da faqat shu repoini tanlang, «Permissions → Contents»ni <b>Read and write</b> qiling.</p>
+    <p class="err" id="ghErr"></p>
+    <div class="acts"><button type="button" class="btn btn--red" id="ghOff">Uzish</button><button type="button" class="btn" data-x>Bekor</button><button class="btn btn--gold">Ulash</button></div>
+  </form>
+</div></div>
+
 <div class="dlg" id="dCat"><div class="dlg__b">
   <h2>Toifa</h2>
   <form class="form" id="cForm">
@@ -219,7 +233,8 @@ window.addEventListener("beforeunload",function(e){ if(dirty){e.preventDefault()
 
 function renderNote(){
   var n=$("#note");
-  if(dir) n.innerHTML="✅ Papka ulangan: <b>"+esc(dir.name)+"</b>. «Saqlash» bosilganda <b>data.json</b> va rasmlar shu papkaga yoziladi.";
+  if(gh()) n.innerHTML="✅ GitHub ulangan: <b>"+esc(gh().repo)+"</b>. «Saqlash» bosilganda o'zgarishlar GitHub'ga yoziladi, sayt 1–2 daqiqada yangilanadi.";
+  else if(dir) n.innerHTML="✅ Papka ulangan: <b>"+esc(dir.name)+"</b>. «Saqlash» bosilganda <b>data.json</b> va rasmlar shu papkaga yoziladi.";
   else n.innerHTML="Avval <b>📁 Papkani ulash</b> tugmasini bosib, sayt papkasini (<b>famous-jalyuzi</b>, ichida index.html turgan papka; <i>admin</i> papkasini emas) tanlang. Shunda «Saqlash» <b>data.json</b> ni to'g'ridan-to'g'ri yangilaydi. Ulanmasa, <b>⬇ data.json</b> orqali faylni yuklab olib, papkadagisi o'rniga qo'ying.";
 }
 
@@ -428,7 +443,66 @@ async function writeImg(dataUrl,name){
 }
 function json(){ return JSON.stringify(data,null,2)+"\n"; }
 
+/* ---------- GitHub orqali saqlash (backendsiz) ---------- */
+var GH_KEY="fj_github";
+function gh(){ try{ var g=JSON.parse(localStorage.getItem(GH_KEY)); return g&&g.repo&&g.token?g:null; }catch(e){ return null; } }
+function b64utf8(s){ return btoa(unescape(encodeURIComponent(s))); }
+function unb64utf8(s){ return decodeURIComponent(escape(atob(s.replace(/\s/g,"")))); }
+async function ghApi(path,opt){
+  var g=gh(); opt=opt||{};
+  var r=await fetch("https://api.github.com/repos/"+g.repo+"/contents/"+path+(opt.method?"":"?ref="+encodeURIComponent(g.branch||"main")),{
+    method:opt.method||"GET",
+    headers:{"Authorization":"Bearer "+g.token,"Accept":"application/vnd.github+json"},
+    body:opt.body?JSON.stringify(opt.body):undefined
+  });
+  if(r.status===404&&!opt.method) return null;
+  var j=await r.json().catch(function(){return {}});
+  if(!r.ok) throw new Error((j&&j.message)||("GitHub xatosi "+r.status));
+  return j;
+}
+async function ghPut(path,b64,msg){
+  var g=gh(), cur=await ghApi(path);
+  var body={message:msg,content:b64,branch:g.branch||"main"}; if(cur&&cur.sha) body.sha=cur.sha;
+  return ghApi(path,{method:"PUT",body:body});
+}
+async function ghImg(dataUrl,name){
+  var fn=slug(name)+"-"+uid()+".jpg";
+  await ghPut("images/"+fn,dataUrl.split(",")[1],"Admin: rasm "+fn);
+  return "images/"+fn;
+}
+async function ghLoad(){ var f=await ghApi("data.json"); return f?JSON.parse(unb64utf8(f.content)):null; }
+async function saveGitHub(){
+  setSt("GitHub'ga saqlanmoqda...");
+  for(var i=0;i<data.products.length;i++){ var p=data.products[i]; if(p.img&&p.img.indexOf("data:")===0) p.img=await ghImg(p.img,p.name); }
+  for(var j=0;j<data.categories.length;j++){ var c=data.categories[j]; if(c.img&&c.img.indexOf("data:")===0) c.img=await ghImg(c.img,"toifa-"+c.name); }
+  for(var k=0;k<data.gallery.length;k++){ var gg=data.gallery[k]; if(gg.img&&gg.img.indexOf("data:")===0) gg.img=await ghImg(gg.img,"ish-"+(gg.title||"rasm")); }
+  if(data.settings.heroImg&&data.settings.heroImg.indexOf("data:")===0) data.settings.heroImg=await ghImg(data.settings.heroImg,"hero");
+  await ghPut("data.json",b64utf8(json()),"Admin: ma'lumotlar yangilandi");
+  dirty=false; localStorage.removeItem(DRAFT); setSt("Saqlandi ✓","ok"); renderAll();
+  toast("Saqlandi! Sayt 1–2 daqiqada yangilanadi");
+}
+function openGh(){
+  var g=gh()||{}, f=$("#ghForm");
+  f.repo.value=g.repo||"abdurahmonpy/famous-jalyuzi"; f.branch.value=g.branch||"main"; f.token.value=g.token||""; $("#ghErr").textContent="";
+  $("#dGh").classList.add("open");
+}
+$("#bGh").addEventListener("click",openGh);
+$("#ghOff").addEventListener("click",function(){ localStorage.removeItem(GH_KEY); $("#dGh").classList.remove("open"); renderNote(); toast("GitHub uzildi"); });
+$("#ghForm").addEventListener("submit",async function(e){
+  e.preventDefault(); var f=e.target;
+  var g={repo:f.repo.value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\.git$|\/$/g,""),branch:f.branch.value.trim()||"main",token:f.token.value.trim()};
+  localStorage.setItem(GH_KEY,JSON.stringify(g)); $("#ghErr").textContent="Tekshirilmoqda...";
+  try{
+    var d=await ghLoad(); if(!d) throw new Error("Repoda data.json topilmadi");
+    $("#dGh").classList.remove("open");
+    if(!dirty){ data=norm(d); renderAll(); }
+    renderNote(); setSt("GitHub ulandi","ok"); toast("GitHub ulandi. Endi «Saqlash» saytni yangilaydi");
+  }catch(x){ localStorage.removeItem(GH_KEY); $("#ghErr").textContent="Ulanmadi: "+(x.message||x); }
+});
+
 $("#bSave").addEventListener("click",async function(){
+  if(gh()){ try{ await saveGitHub(); }catch(e){ console.error(e); setSt("Saqlanmadi","dirty"); toast("Saqlab bo'lmadi: "+(e.message||e.name),true); } return; }
+  if(!dir && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)){ toast("Internetda saqlash uchun avval «🔗 GitHub» ni ulang"); return openGh(); }
   if(!dir){ toast("Papka ulanmagan: data.json yuklab olinmoqda. Uni sayt papkasidagi data.json o'rniga qo'ying"); return download(); }
   try{
     if(!(await perm(dir,true))) return toast("Papkaga yozishga ruxsat berilmadi",true);
@@ -457,7 +531,8 @@ $("#bPreview").addEventListener("click",function(){
   var h=await idbGet(); if(h){ dir=h; }
   if(draft){ data=norm(draft); dirty=true; setSt("Saqlanmagan qoralama tiklandi","dirty"); }
   else{
-    if(dir && await perm(dir,false)){ try{ data=norm(await readDirJson(dir)); setSt("data.json papkadan o'qildi","ok"); }catch(e){} }
+    if(gh()){ try{ var gd=await ghLoad(); if(gd){ data=norm(gd); setSt("GitHub'dan o'qildi","ok"); } }catch(e){ console.warn(e); } }
+    if(!data && dir && await perm(dir,false)){ try{ data=norm(await readDirJson(dir)); setSt("data.json papkadan o'qildi","ok"); }catch(e){} }
     if(!data){ try{ var r=await fetch("../data.json?v="+Date.now(),{cache:"no-store"}); if(r.ok){ data=norm(await r.json()); setSt("data.json o'qildi","ok"); } }catch(e){} }
     if(!data){ data=norm(null); setSt("data.json topilmadi: papkani ulang","dirty"); }
   }
