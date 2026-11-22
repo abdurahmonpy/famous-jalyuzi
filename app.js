@@ -92,25 +92,18 @@ function calc(){
   return {p:p,w:w,h:h,q:q,sum:sum};
 }
 
-/* Instagram videolar */
-var igLoaded=false;
+/* Instagram videolar: faqat videoning o'zi (sarlavha va izohlar kesib tashlanadi) */
+function igEmbed(url){ var l=igPermalink(url); return l?l+"embed/":null; }
 function renderVideos(){
   var vids=(D.videos||[]).filter(function(v){return igPermalink(v.url)});
   $("#videos").innerHTML=vids.map(function(v){
-    var link=igPermalink(v.url);
-    return '<div class="video"><blockquote class="instagram-media" data-instgrm-permalink="'+esc(link)+'?utm_source=ig_embed" data-instgrm-version="14">'+
-      '<a class="video__fb" href="'+esc(link)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Instagram\'da ko\'rish</a></blockquote>'+
-      (v.title?'<div class="video__t">'+esc(v.title)+'</div>':'')+'</div>';
+    return '<figure class="video"><div class="vbox"><iframe src="'+esc(igEmbed(v.url))+'" loading="lazy" scrolling="no" allowtransparency="true" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" title="'+esc(v.title||"Video")+'"></iframe></div>'+
+      (v.title?'<figcaption class="video__t">'+esc(v.title)+'</figcaption>':'')+'</figure>';
   }).join("");
-  $("#vEmpty").hidden=vids.length>0;
+  $("#videolar").hidden=!vids.length;
+  var nl=$('.nav a[href="#videolar"]'); if(nl) nl.hidden=!vids.length;
   var ig=igUser(D.settings&&D.settings.instagram);
-  $("#igMore").innerHTML=ig?'<a class="btn btn--line" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">Instagram sahifamiz</a>':"";
-  if(!vids.length) return;
-  if(window.instgrm){ window.instgrm.Embeds.process(); return; }
-  if(igLoaded) return; igLoaded=true;
-  var sc=document.createElement("script"); sc.async=true; sc.src="https://www.instagram.com/embed.js";
-  sc.onload=function(){ if(window.instgrm) window.instgrm.Embeds.process(); };
-  document.body.appendChild(sc);
+  $("#igMore").innerHTML=ig?'<a class="btn btn--line" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">Barcha videolar Instagram\'da</a>':"";
 }
 
 function renderContacts(){
@@ -185,7 +178,7 @@ $$(".nav a").forEach(function(a){ a.addEventListener("click",closeNav); });
 /* aktiv bo'lim */
 if("IntersectionObserver" in window){
   var io=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ $$(".nav a").forEach(function(a){ a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id); }); } }); },{rootMargin:"-45% 0px -50% 0px"});
-  ["katalog","ishlar","dokon"].forEach(function(id){ var el=document.getElementById(id); if(el) io.observe(el); });
+  ["katalog","ishlar","videolar","dokon"].forEach(function(id){ var el=document.getElementById(id); if(el) io.observe(el); });
 }
 
 document.addEventListener("click",function(e){

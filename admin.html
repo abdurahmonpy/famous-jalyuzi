@@ -67,6 +67,8 @@ input[type=checkbox]{width:auto}
 .gi img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
 .gi input{border:0;border-top:1px solid #eee7d8;border-radius:0;font-size:13px}
 .gi .acts{padding:6px;justify-content:space-between}
+.vpv{width:120px;aspect-ratio:9/16;flex:none;position:relative;overflow:hidden;border-radius:10px;background:#111}
+.vpv iframe{position:absolute;left:0;top:-56px;width:100%;height:calc(100% + 296px);border:0;pointer-events:none}
 .err{color:var(--red);font-size:13px;font-weight:600;min-height:1em}
 @media(max-width:700px){.g2,.g3{grid-template-columns:1fr}.hide-sm{display:none}}
 </style>
@@ -116,7 +118,7 @@ input[type=checkbox]{width:auto}
       </div>
       <div><button class="btn btn--green">+ Video qo'shish</button> <span class="err" id="vErr"></span></div>
     </form>
-    <p class="muted">Instagram'da videoni oching → “…” → <b>Havolani nusxalash</b> → shu yerga qo'ying. Sahifa ochiq (public) bo'lishi kerak.</p>
+    <p class="muted">Instagram'da videoni oching → “…” → <b>Havolani nusxalash</b> → shu yerga qo'ying. Saytda faqat videoning o'zi chiqadi (Instagram sarlavhasi va izohlarsiz). Sahifa ochiq (public) bo'lishi kerak.</p>
     <div id="vList"></div>
   </section>
 
@@ -302,7 +304,7 @@ $("#cImgDel").addEventListener("click",function(){ cImg=""; showPv("",$("#cImg")
 function renderVids(){
   $("#vList").innerHTML=data.videos.map(function(v,i){
     var ok=igPermalink(v.url);
-    return '<div class="vid"><span class="vid__i"></span><div class="vid__t"><b>'+esc(v.title||"Sarlavhasiz video")+'</b><br><a href="'+esc(v.url)+'" target="_blank" rel="noopener">'+esc(v.url)+'</a>'+(ok?"":' <span class="err">havola noto\'g\'ri</span>')+'</div>'+
+    return '<div class="vid">'+(ok?'<div class="vpv"><iframe src="'+esc(ok)+'embed/" loading="lazy" scrolling="no" title="Video"></iframe></div>':'<span class="vid__i"></span>')+'<div class="vid__t"><b>'+esc(v.title||"Sarlavhasiz video")+'</b><br><a href="'+esc(v.url)+'" target="_blank" rel="noopener">'+esc(v.url)+'</a>'+(ok?"":' <span class="err">havola noto\'g\'ri</span>')+'</div>'+
       '<div class="acts"><button class="btn btn--sm" data-vu="'+i+'" '+(i?"":"disabled")+'>↑</button><button class="btn btn--sm" data-vt="'+i+'">Sarlavha</button><button class="btn btn--sm btn--red" data-vd="'+i+'">O\'chirish</button></div></div>';
   }).join("")||'<p class="muted">Hali video qo\'shilmagan.</p>';
 }
