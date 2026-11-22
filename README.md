@@ -9,7 +9,7 @@ Backend yo'q. Barcha ma'lumot bitta **`data.json`** faylida saqlanadi.
 | `index.html`, `style.css`, `app.js` | Sayt |
 | `data.json` | Pardalar, toifalar, Instagram videolar, sozlamalar |
 | `images/` | Admin yuklagan rasmlar |
-| `admin.html` | Admin panel |
+| `admin/index.html` | Admin panel (`/admin` manzilida) |
 | `start.bat` | Kompyuterda ishga tushirish |
 | `eski/` | Eski dizayn (zaxira nusxa). Kerak bo'lmasa o'chirib tashlang |
 
@@ -18,13 +18,13 @@ Backend yo'q. Barcha ma'lumot bitta **`data.json`** faylida saqlanadi.
 `start.bat` ni ikki marta bosing. Brauzerda admin panel ochiladi:
 
 - Sayt: http://localhost:8000
-- Admin: http://localhost:8000/admin.html
+- Admin: http://localhost:8000/admin/
 
 (`index.html` ni to'g'ridan-to'g'ri ikki marta bosib ochsangiz, brauzer `data.json` ni o'qishga ruxsat bermaydi. Shuning uchun `start.bat` kerak. Hostingda bu muammo yo'q.)
 
 ## Admin panel
 
-1. Chrome yoki Edge'da `admin.html` ni oching.
+1. Chrome yoki Edge'da `/admin` sahifasini oching (`admin/index.html`).
 2. **📁 Papkani ulash** → sayt papkasini tanlang (bir marta).
 3. **Pardalar** → «+ Yangi parda qo'shish»: nomi, toifa, narx (m²), tavsif, rasm.
 4. **Toifalar** → yangi toifa; «Bosh sahifada» belgisi qo'yilganlar «Eng xaridorgir toifalar» blokida chiqadi.
@@ -40,7 +40,7 @@ Papka ulanmasa, **⬇ data.json** tugmasi faylni yuklab beradi: uni papkadagi `d
 ## Hostingga joylash
 
 Yuklang: `index.html`, `style.css`, `app.js`, `data.json`, `images/`.
-**`admin.html` ni yuklamang**: u faqat sizning kompyuteringizda ishlaydi. Har gal o'zgartirgandan keyin yangi `data.json` va `images/` ni hostingga qayta yuklang.
+**`/admin` faqat kompyuteringizda ishlaydi**: hostingda ochiladi, lekin u yerdan saqlab bo'lmaydi. Har gal o'zgartirgandan keyin yangi `data.json` va `images/` ni hostingga qayta yuklang.
 
 ## Buyurtmalar (arizalar)
 

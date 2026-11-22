@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="icon" type="image/png" href="../images/favicon.png">
 <title>Admin | Famous Jalyuzi</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -76,7 +76,7 @@ input[type=checkbox]{width:auto}
 <body>
 
 <div class="top"><div class="top__in">
-  <h1 style="display:flex;align-items:center;gap:10px"><img src="images/logo.png" alt="" style="height:34px">Famous Jalyuzi · Admin</h1>
+  <h1 style="display:flex;align-items:center;gap:10px"><img src="../images/logo.png" alt="" style="height:34px">Famous Jalyuzi · Admin</h1>
   <span class="st" id="st">Yuklanmoqda...</span>
   <button class="btn btn--ghost" id="bConnect">📁 Papkani ulash</button>
   <button class="btn btn--ghost" id="bPreview">👁 Saytda ko'rish</button>
@@ -220,7 +220,7 @@ window.addEventListener("beforeunload",function(e){ if(dirty){e.preventDefault()
 function renderNote(){
   var n=$("#note");
   if(dir) n.innerHTML="✅ Papka ulangan: <b>"+esc(dir.name)+"</b>. «Saqlash» bosilganda <b>data.json</b> va rasmlar shu papkaga yoziladi.";
-  else n.innerHTML="Avval <b>📁 Papkani ulash</b> tugmasini bosib, sayt papkasini (index.html turgan papka) tanlang. Shunda «Saqlash» <b>data.json</b> ni to'g'ridan-to'g'ri yangilaydi. Ulanmasa, <b>⬇ data.json</b> orqali faylni yuklab olib, papkadagisi o'rniga qo'ying.";
+  else n.innerHTML="Avval <b>📁 Papkani ulash</b> tugmasini bosib, sayt papkasini (<b>famous-jalyuzi</b>, ichida index.html turgan papka; <i>admin</i> papkasini emas) tanlang. Shunda «Saqlash» <b>data.json</b> ni to'g'ridan-to'g'ri yangilaydi. Ulanmasa, <b>⬇ data.json</b> orqali faylni yuklab olib, papkadagisi o'rniga qo'ying.";
 }
 
 /* rasmni kichraytirish (900px, jpeg) */
@@ -235,7 +235,7 @@ function resize(file){
     fr.onerror=rej; fr.readAsDataURL(file);
   });
 }
-function imgSrc(p){ return p||""; }
+function imgSrc(p){ p=p||""; return (!p||/^(data:|https?:|blob:|\/)/.test(p))?p:"../"+p; }  /* admin /admin/ ichida turadi */
 
 /* PARDALAR */
 function fillCatSel(sel,val,all){
@@ -319,7 +319,7 @@ $("#vForm").addEventListener("submit",function(e){
 /* ISHLARIMIZ (galereya) */
 function renderGal(){
   $("#gList").innerHTML=data.gallery.map(function(g,i){
-    return '<div class="gi"><img src="'+esc(g.img)+'" alt=""><input data-gt="'+i+'" value="'+esc(g.title||"")+'" placeholder="Izoh (masalan: Plisse, Yunusobod)">'+
+    return '<div class="gi"><img src="'+esc(imgSrc(g.img))+'" alt=""><input data-gt="'+i+'" value="'+esc(g.title||"")+'" placeholder="Izoh (masalan: Plisse, Yunusobod)">'+
       '<div class="acts"><span><button class="btn btn--sm" data-gu="'+i+'" '+(i?"":"disabled")+'>←</button> <button class="btn btn--sm" data-gd2="'+i+'" '+(i<data.gallery.length-1?"":"disabled")+'>→</button></span><button class="btn btn--sm btn--red" data-gd="'+i+'">O\'chirish</button></div></div>';
   }).join("")||'<p class="muted">Hali rasm yo\'q.</p>';
 }
@@ -448,7 +448,7 @@ function download(){
 $("#bDownload").addEventListener("click",download);
 $("#bPreview").addEventListener("click",function(){
   try{ localStorage.setItem(PREVIEW,JSON.stringify(data)); }catch(e){ return toast("Ko'rib chiqish uchun xotira yetmadi (rasmlar juda ko'p). Avval saqlang",true); }
-  window.open("index.html?preview=1","_blank");
+  window.open("../?preview=1","_blank");
 });
 
 /* boshlash: qoralama → ulangan papka → data.json (server orqali) */
@@ -458,7 +458,7 @@ $("#bPreview").addEventListener("click",function(){
   if(draft){ data=norm(draft); dirty=true; setSt("Saqlanmagan qoralama tiklandi","dirty"); }
   else{
     if(dir && await perm(dir,false)){ try{ data=norm(await readDirJson(dir)); setSt("data.json papkadan o'qildi","ok"); }catch(e){} }
-    if(!data){ try{ var r=await fetch("data.json?v="+Date.now(),{cache:"no-store"}); if(r.ok){ data=norm(await r.json()); setSt("data.json o'qildi","ok"); } }catch(e){} }
+    if(!data){ try{ var r=await fetch("../data.json?v="+Date.now(),{cache:"no-store"}); if(r.ok){ data=norm(await r.json()); setSt("data.json o'qildi","ok"); } }catch(e){} }
     if(!data){ data=norm(null); setSt("data.json topilmadi: papkani ulang","dirty"); }
   }
   if(dir && !(await perm(dir,false))) $("#note").dataset.reconnect="1";

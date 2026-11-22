@@ -68,29 +68,11 @@ function renderGrid(){
       '<div class="card__b"><span class="cat-l">'+esc(c.name||"")+'</span><h3>'+esc(p.name)+'</h3>'+
       (p.desc?'<p>'+esc(p.desc)+'</p>':'')+
       (p.price?'<div class="price">'+fmt(p.price)+' so\'m <small>/ m²</small></div>':'<div class="price"><small>Narxi kelishiladi</small></div>')+
-      '<div class="acts"><button class="btn btn--line" data-calc="'+esc(p.id)+'">Hisoblash</button><button class="btn btn--gold" data-buy="'+esc(p.id)+'">Buyurtma</button></div></div></article>';
+      '<div class="acts"><button class="btn btn--gold" data-buy="'+esc(p.id)+'">Buyurtma</button></div></div></article>';
   }).join("");
   $("#empty").hidden=list.length>0;
 }
 
-/* kalkulyator */
-function renderCalcSelect(){
-  var sel=$("#cProd"), prev=sel.value;
-  sel.innerHTML=visible().filter(function(p){return p.price}).map(function(p){
-    return '<option value="'+esc(p.id)+'">'+esc(catOf(p.cat).name?catOf(p.cat).name+" — ":"")+esc(p.name)+' ('+fmt(p.price)+' so\'m/m²)</option>';
-  }).join("");
-  if(prev) sel.value=prev;
-  calc();
-}
-function calc(){
-  var p=visible().filter(function(x){return x.id===$("#cProd").value})[0];
-  var w=+$("#cW").value||0, h=+$("#cH").value||0, q=Math.max(1,+$("#cQ").value||1);
-  var area=Math.max(w*h/10000,1);  /* 1 dona uchun eng kamida 1 m² */
-  var sum=p?area*q*p.price:0;
-  $("#cRes").textContent=fmt(sum)+" so'm";
-  $("#cArea").textContent=p?(area.toFixed(2)+" m² × "+q+" dona × "+fmt(p.price)+" so'm"):"";
-  return {p:p,w:w,h:h,q:q,sum:sum};
-}
 
 /* Instagram videolar: faqat videoning o'zi (sarlavha va izohlar kesib tashlanadi) */
 function igEmbed(url){ var l=igPermalink(url); return l?l+"embed/":null; }
@@ -103,8 +85,6 @@ function renderVideos(){
   }).join("");
   $("#videolar").hidden=!vids.length;
   var nl=$('.nav a[href="#videolar"]'); if(nl) nl.hidden=!vids.length;
-  var ig=igUser(D.settings&&D.settings.instagram);
-  $("#igMore").innerHTML=ig?'<a class="btn btn--line" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">Barcha videolar Instagram\'da</a>':"";
 }
 
 function renderContacts(){
@@ -144,7 +124,7 @@ function renderAreas(){
   $(".areas").hidden=!a.length;
 }
 
-function renderAll(){ renderHero(); renderFeatured(); renderChips(); renderGrid(); renderGallery(); renderSteps(); renderCalcSelect(); renderVideos(); renderContacts(); renderAreas(); }
+function renderAll(){ renderHero(); renderFeatured(); renderChips(); renderGrid(); renderGallery(); renderSteps(); renderVideos(); renderContacts(); renderAreas(); }
 
 /* buyurtma oynasi */
 var modal=$("#modal");
@@ -186,23 +166,17 @@ document.addEventListener("click",function(e){
   var gf=e.target.closest("[data-gi]"); if(gf) return lbShow(+gf.dataset.gi);
   if(e.target.closest("[data-lbx]")||e.target.id==="lb") return lbClose();
   var ln=e.target.closest("[data-lbn]"); if(ln) return lbShow(galIdx+(+ln.dataset.lbn));
-  var t=e.target.closest("[data-order],[data-close],[data-cat],[data-chip],[data-buy],[data-calc]");
+  var t=e.target.closest("[data-order],[data-close],[data-cat],[data-chip],[data-buy]");
   if(!t) return;
   if(t.hasAttribute("data-order")) return openOrder("");
   if(t.hasAttribute("data-close")) return closeOrder();
   if(t.dataset.cat){ curCat=t.dataset.cat; renderChips(); renderGrid(); $("#katalog").scrollIntoView({behavior:"smooth"}); return; }
   if(t.dataset.chip){ curCat=t.dataset.chip; renderChips(); renderGrid(); return; }
   if(t.dataset.buy){ var p=visible().filter(function(x){return x.id===t.dataset.buy})[0]; return openOrder(p?(catOf(p.cat).name||"")+": "+p.name:""); }
-  if(t.dataset.calc){ $("#cProd").value=t.dataset.calc; calc(); $("#kalkulyator").scrollIntoView({behavior:"smooth"}); }
 });
 document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){ closeOrder(); closeNav(); lbClose(); }
   if($("#lb").classList.contains("open")){ if(e.key==="ArrowRight") lbShow(galIdx+1); if(e.key==="ArrowLeft") lbShow(galIdx-1); }
-});
-["#cProd","#cW","#cH","#cQ"].forEach(function(s){ $(s).addEventListener("input",calc); });
-$("#cOrder").addEventListener("click",function(){
-  var r=calc(); if(!r.p) return openOrder("");
-  openOrder(r.p.name+", "+r.w+"×"+r.h+" sm, "+r.q+" dona ≈ "+fmt(r.sum)+" so'm");
 });
 
 /* ma'lumotni yuklash: admin "Saytda ko'rish" bossa qoralama, aks holda data.json */
