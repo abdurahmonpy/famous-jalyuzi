@@ -97,8 +97,9 @@ function igEmbed(url){ var l=igPermalink(url); return l?l+"embed/":null; }
 function renderVideos(){
   var vids=(D.videos||[]).filter(function(v){return igPermalink(v.url)});
   $("#videos").innerHTML=vids.map(function(v){
-    return '<figure class="video"><div class="vbox"><iframe src="'+esc(igEmbed(v.url))+'" loading="lazy" scrolling="no" allowtransparency="true" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" title="'+esc(v.title||"Video")+'"></iframe></div>'+
-      (v.title?'<figcaption class="video__t">'+esc(v.title)+'</figcaption>':'')+'</figure>';
+    var link=igPermalink(v.url);
+    return '<figure class="video"><div class="vbox"><iframe src="'+esc(link+"embed/")+'" loading="lazy" scrolling="no" allowtransparency="true" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" title="'+esc(v.title||"Video")+'"></iframe>'+
+      '<a class="vig" href="'+esc(link)+'" target="_blank" rel="noopener" aria-label="Instagram&#39;da ochish" title="Instagram&#39;da ochish"><svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM21.9 8c-.1-1.6-.4-3-1.6-4.2S17.6 2.2 16 2.1C14.4 2 9.6 2 8 2.1 6.4 2.2 5 2.5 3.8 3.7S2.2 6.4 2.1 8C2 9.6 2 14.4 2.1 16c.1 1.6.4 3 1.6 4.2s2.6 1.5 4.2 1.6c1.6.1 6.4.1 8 0 1.6-.1 3-.4 4.2-1.6s1.5-2.6 1.6-4.2c.1-1.6.1-6.4.2-8zm-2.1 9.8a3.3 3.3 0 0 1-1.8 1.8c-1.3.5-4.3.4-5.7.4s-4.4.1-5.7-.4a3.3 3.3 0 0 1-1.8-1.8c-.5-1.3-.4-4.3-.4-5.7s-.1-4.4.4-5.7A3.3 3.3 0 0 1 6.6 4.6c1.3-.5 4.3-.4 5.7-.4s4.4-.1 5.7.4a3.3 3.3 0 0 1 1.8 1.8c.5 1.3.4 4.3.4 5.7s.1 4.4-.4 5.7z"/></svg></a></div></figure>';
   }).join("");
   $("#videolar").hidden=!vids.length;
   var nl=$('.nav a[href="#videolar"]'); if(nl) nl.hidden=!vids.length;
