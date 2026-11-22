@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>Admin | Famous Jalyuzi</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#123a2b;--green-2:#1b4a37;--gold:#d4ac4c;--cream:#f6efdf;--line:#e3dccb;--ink:#1d2420;--muted:#6b6f68;--red:#a33030}
+*{box-sizing:border-box}
+body{margin:0;font-family:Manrope,system-ui,sans-serif;background:#f4f1ea;color:var(--ink)}
+button,input,select,textarea{font:inherit}
+.top{background:var(--green);color:#fff;position:sticky;top:0;z-index:10}
+.top__in{max-width:1180px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top h1{font-size:18px;margin:0 auto 0 0;color:var(--gold)}
+.st{font-size:13px;color:#c9d6cc}
+.st.dirty{color:#ffd27a}.st.ok{color:#9be3b5}
+.btn{border:0;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:14px;background:#e9e4d7;color:var(--ink)}
+.btn:hover{filter:brightness(.96)}
+.btn--gold{background:var(--gold);color:#0c2a1f}
+.btn--green{background:var(--green);color:#fff}
+.btn--ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.btn--red{background:#f6e1e1;color:var(--red)}
+.btn--sm{padding:6px 10px;font-size:13px}
+.tabs{max-width:1180px;margin:18px auto 0;padding:0 20px;display:flex;gap:6px;flex-wrap:wrap}
+.tab{padding:10px 16px;border-radius:10px 10px 0 0;background:#e6e0d1;border:0;cursor:pointer;font-weight:700;color:var(--muted)}
+.tab.on{background:#fff;color:var(--green)}
+.panel{max-width:1180px;margin:0 auto 40px;padding:0 20px}
+.box{background:#fff;border-radius:0 12px 12px 12px;padding:22px;box-shadow:0 4px 18px rgba(0,0,0,.05)}
+.note{background:#fff8e6;border:1px solid #f0dfaf;border-radius:10px;padding:12px 14px;margin:16px auto 0;max-width:1140px;font-size:14px}
+.note b{color:var(--green)}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.bar input,.bar select{max-width:260px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #eee7d8;vertical-align:middle;font-size:14px}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.th{width:64px;height:48px;border-radius:6px;object-fit:cover;background:linear-gradient(135deg,var(--c1,#ccc),var(--c2,#eee));display:block}
+.acts{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.off{opacity:.45}
+label{display:grid;gap:5px;font-size:13px;font-weight:700;color:#3b423d}
+input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+input[type=color]{padding:2px;height:40px}
+input[type=checkbox]{width:auto}
+.chk{display:flex;align-items:center;gap:8px;font-weight:600}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.form{display:grid;gap:14px}
+.dlg{position:fixed;inset:0;background:rgba(10,30,22,.55);display:none;place-items:center;z-index:20;padding:16px}
+.dlg.open{display:grid}
+.dlg__b{background:#fff;border-radius:14px;padding:24px;width:min(560px,100%);max-height:92vh;overflow:auto}
+.dlg__b h2{margin:0 0 14px;color:var(--green)}
+.pv{display:flex;gap:12px;align-items:center}
+.pv img,.pv .ph{width:120px;height:90px;object-fit:cover;border-radius:8px;background:#eee}
+.vid{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #eee7d8;border-radius:10px;margin-bottom:10px}
+.vid__i{width:44px;height:44px;border-radius:10px;flex:none;background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}
+.vid__t{flex:1;min-width:0}
+.vid__t a{font-size:13px;color:var(--muted);word-break:break-all}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(120px);background:var(--green);color:#fff;padding:12px 18px;border-radius:10px;font-weight:600;transition:.3s;z-index:30;max-width:90vw}
+.toast.on{transform:translateX(-50%)}
+.toast.bad{background:var(--red)}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.gi{border:1px solid #eee7d8;border-radius:10px;overflow:hidden;background:#faf8f3}
+.gi img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.gi input{border:0;border-top:1px solid #eee7d8;border-radius:0;font-size:13px}
+.gi .acts{padding:6px;justify-content:space-between}
+.err{color:var(--red);font-size:13px;font-weight:600;min-height:1em}
+@media(max-width:700px){.g2,.g3{grid-template-columns:1fr}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top__in">
+  <h1 style="display:flex;align-items:center;gap:10px"><img src="images/logo.png" alt="" style="height:34px">Famous Jalyuzi · Admin</h1>
+  <span class="st" id="st">Yuklanmoqda...</span>
+  <button class="btn btn--ghost" id="bConnect">📁 Papkani ulash</button>
+  <button class="btn btn--ghost" id="bPreview">👁 Saytda ko'rish</button>
+  <button class="btn btn--ghost" id="bDownload" title="data.json faylini yuklab olish">⬇ data.json</button>
+  <button class="btn btn--gold" id="bSave">💾 Saqlash</button>
+</div></div>
+
+<div class="note" id="note"></div>
+
+<div class="tabs" role="tablist">
+  <button class="tab on" data-tab="prod">Pardalar</button>
+  <button class="tab" data-tab="cats">Toifalar</button>
+  <button class="tab" data-tab="gal">Ishlarimiz (rasmlar)</button>
+  <button class="tab" data-tab="info">O'rnatish va hududlar</button>
+  <button class="tab" data-tab="vids">Instagram videolar</button>
+  <button class="tab" data-tab="set">Sozlamalar</button>
+</div>
+
+<div class="panel">
+  <section class="box" data-p="prod">
+    <div class="bar">
+      <button class="btn btn--green" id="addProd">+ Yangi parda qo'shish</button>
+      <select id="fCat"></select>
+      <input id="fQ" placeholder="Qidirish...">
+    </div>
+    <table><thead><tr><th>Rasm</th><th>Nomi</th><th class="hide-sm">Toifa</th><th>Narx (m²)</th><th></th></tr></thead><tbody id="tProd"></tbody></table>
+  </section>
+
+  <section class="box" data-p="cats" hidden>
+    <div class="bar"><button class="btn btn--green" id="addCat">+ Yangi toifa</button><span class="muted">“Bosh sahifada” belgilangan toifalar “Eng xaridorgir toifalar” blokida chiqadi.</span></div>
+    <table><thead><tr><th>Rasm</th><th>Nomi</th><th>Mahsulot</th><th>Bosh sahifada</th><th></th></tr></thead><tbody id="tCat"></tbody></table>
+  </section>
+
+  <section class="box" data-p="vids" hidden>
+    <form class="form" id="vForm">
+      <div class="g2">
+        <label>Instagram havolasi (Reels yoki post)<input id="vUrl" placeholder="https://www.instagram.com/reel/XXXXXXXX/" required></label>
+        <label>Sarlavha (ixtiyoriy)<input id="vTitle" placeholder="Masalan: Plisse o'rnatish"></label>
+      </div>
+      <div><button class="btn btn--green">+ Video qo'shish</button> <span class="err" id="vErr"></span></div>
+    </form>
+    <p class="muted">Instagram'da videoni oching → “…” → <b>Havolani nusxalash</b> → shu yerga qo'ying. Sahifa ochiq (public) bo'lishi kerak.</p>
+    <div id="vList"></div>
+  </section>
+
+  <section class="box" data-p="gal" hidden>
+    <div class="bar">
+      <label class="btn btn--green" style="display:inline-block;cursor:pointer">+ Rasm qo'shish<input type="file" accept="image/*" id="gFile" multiple hidden></label>
+      <span class="muted">Bir nechta rasmni birdan tanlash mumkin. «Bizning ishlar» bo'limida chiqadi.</span>
+    </div>
+    <div class="ggrid" id="gList"></div>
+  </section>
+
+  <section class="box" data-p="info" hidden>
+    <form class="form" id="iForm">
+      <label>O'rnatish qadamlari — har qatorda bitta: <i>Sarlavha | matn</i><textarea rows="6" data-i="steps"></textarea></label>
+      <label>O'lchash bo'yicha maslahatlar — har qatorda bitta: <i>Sarlavha | matn</i><textarea rows="7" data-i="measureTips"></textarea></label>
+      <label>Xizmat hududlari (joy nomlari) — har qatorda bitta<textarea rows="8" data-i="areas"></textarea></label>
+      <label>Hududlar ostidagi izoh<input data-i="areasNote"></label>
+    </form>
+  </section>
+
+  <section class="box" data-p="set" hidden>
+    <form class="form" id="sForm"></form>
+  </section>
+</div>
+
+<div class="dlg" id="dProd"><div class="dlg__b">
+  <h2 id="dpT">Parda</h2>
+  <form class="form" id="pForm">
+    <label>Nomi<input name="name" required></label>
+    <div class="g2">
+      <label>Toifa<select name="cat" id="pCat"></select></label>
+      <label>Narx, so'm / m²<input name="price" type="number" min="0" step="1000"></label>
+    </div>
+    <label>Qisqa tavsif<textarea name="desc" rows="2"></textarea></label>
+    <div class="pv"><img id="pImg" alt="" hidden><div class="ph" id="pPh"></div>
+      <div class="form" style="gap:8px"><label>Rasm<input type="file" accept="image/*" id="pFile"></label><button type="button" class="btn btn--sm btn--red" id="pImgDel">Rasmni olib tashlash</button></div>
+    </div>
+    <div class="g3">
+      <label>Rang 1 (rasm bo'lmasa)<input type="color" name="c1"></label>
+      <label>Rang 2<input type="color" name="c2"></label>
+      <label class="chk" style="align-self:end"><input type="checkbox" name="hidden"> Saytda yashirish</label>
+    </div>
+    <div class="acts"><button type="button" class="btn" data-x>Bekor</button><button class="btn btn--gold">Tayyor</button></div>
+  </form>
+</div></div>
+
+<div class="dlg" id="dCat"><div class="dlg__b">
+  <h2>Toifa</h2>
+  <form class="form" id="cForm">
+    <label>Nomi<input name="name" required></label>
+    <div class="g3">
+      <label>Chizma turi<select name="style">
+        <option value="drape">Parda (DK)</option><option value="pleat">Plisse</option><option value="roll">Rulon</option>
+        <option value="zebra">Zebra</option><option value="mesh">Setka</option><option value="slats">Jalyuzi</option></select></label>
+      <label>Rang 1<input type="color" name="c1"></label>
+      <label>Rang 2<input type="color" name="c2"></label>
+    </div>
+    <div class="pv"><img id="cImg" alt="" hidden><div class="ph" id="cPh"></div>
+      <div class="form" style="gap:8px"><label>Rasm<input type="file" accept="image/*" id="cFile"></label><button type="button" class="btn btn--sm btn--red" id="cImgDel">Rasmni olib tashlash</button></div>
+    </div>
+    <label class="chk"><input type="checkbox" name="featured"> Bosh sahifadagi “Eng xaridorgir toifalar”da ko'rsatish</label>
+    <div class="acts"><button type="button" class="btn" data-x>Bekor</button><button class="btn btn--gold">Tayyor</button></div>
+  </form>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+var DRAFT="fj_admin_draft", PREVIEW="fj_preview";
+var data=null, dir=null, dirty=false, editP=null, editC=null, pImg="", cImg="";
+
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function fmt(n){return String(n||0).replace(/\B(?=(\d{3})+(?!\d))/g," ")}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function slug(s){return String(s).toLowerCase().replace(/['`ʻʼ’]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"rasm"}
+function toast(m,bad){var t=$("#toast");t.textContent=m;t.className="toast on"+(bad?" bad":"");clearTimeout(toast.t);toast.t=setTimeout(function(){t.className="toast"},3500)}
+function catOf(id){return data.categories.filter(function(c){return c.id===id})[0]||{}}
+function igPermalink(url){
+  var m=String(url||"").match(/instagram\.com\/(?:[A-Za-z0-9_.]+\/)?(p|reel|reels|tv)\/([A-Za-z0-9_-]+)/i);
+  if(!m) return null; var k=m[1].toLowerCase()==="reels"?"reel":m[1].toLowerCase();
+  return "https://www.instagram.com/"+k+"/"+m[2]+"/";
+}
+function norm(d){
+  d=d||{}; d.settings=d.settings||{}; ["categories","products","videos","gallery","steps","measureTips","areas"].forEach(function(k){ d[k]=d[k]||[]; }); return d;
+}
+
+/* holat */
+function setSt(t,cls){var s=$("#st");s.textContent=t;s.className="st "+(cls||"")}
+function touch(){
+  dirty=true; setSt("Saqlanmagan o'zgarishlar bor","dirty");
+  try{localStorage.setItem(DRAFT,JSON.stringify(data))}catch(e){}
+}
+window.addEventListener("beforeunload",function(e){ if(dirty){e.preventDefault();e.returnValue=""} });
+
+function renderNote(){
+  var n=$("#note");
+  if(dir) n.innerHTML="✅ Papka ulangan: <b>"+esc(dir.name)+"</b>. «Saqlash» bosilganda <b>data.json</b> va rasmlar shu papkaga yoziladi.";
+  else n.innerHTML="Avval <b>📁 Papkani ulash</b> tugmasini bosib, sayt papkasini (index.html turgan papka) tanlang. Shunda «Saqlash» <b>data.json</b> ni to'g'ridan-to'g'ri yangilaydi. Ulanmasa, <b>⬇ data.json</b> orqali faylni yuklab olib, papkadagisi o'rniga qo'ying.";
+}
+
+/* rasmni kichraytirish (900px, jpeg) */
+function resize(file){
+  return new Promise(function(res,rej){
+    var fr=new FileReader();
+    fr.onload=function(){ var im=new Image(); im.onload=function(){
+      var max=1200, w=im.width, h=im.height, k=Math.min(1,max/Math.max(w,h));
+      var c=document.createElement("canvas"); c.width=Math.round(w*k); c.height=Math.round(h*k);
+      c.getContext("2d").drawImage(im,0,0,c.width,c.height); res(c.toDataURL("image/jpeg",.82));
+    }; im.onerror=rej; im.src=fr.result; };
+    fr.onerror=rej; fr.readAsDataURL(file);
+  });
+}
+function imgSrc(p){ return p||""; }
+
+/* PARDALAR */
+function fillCatSel(sel,val,all){
+  sel.innerHTML=(all?'<option value="">Barcha toifalar</option>':"")+data.categories.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>'}).join("");
+  if(val!=null) sel.value=val;
+}
+function renderProd(){
+  var f=$("#fCat").value, q=$("#fQ").value.trim().toLowerCase();
+  var list=data.products.filter(function(p){return (!f||p.cat===f)&&(!q||String(p.name).toLowerCase().indexOf(q)>=0)});
+  $("#tProd").innerHTML=list.map(function(p){
+    var c=catOf(p.cat);
+    var th=p.img?'<img class="th" src="'+esc(imgSrc(p.img))+'" alt="">':'<span class="th" style="--c1:'+esc(p.c1||c.c1)+';--c2:'+esc(p.c2||c.c2)+'"></span>';
+    return '<tr class="'+(p.hidden?"off":"")+'"><td>'+th+'</td><td><b>'+esc(p.name)+'</b>'+(p.hidden?' <span class="muted">(yashirin)</span>':'')+'</td><td class="hide-sm">'+esc(c.name||"—")+'</td><td>'+(p.price?fmt(p.price):"—")+'</td>'+
+      '<td><div class="acts"><button class="btn btn--sm" data-pe="'+esc(p.id)+'">Tahrirlash</button><button class="btn btn--sm" data-ph="'+esc(p.id)+'">'+(p.hidden?"Ko'rsatish":"Yashirish")+'</button><button class="btn btn--sm btn--red" data-pd="'+esc(p.id)+'">O\'chirish</button></div></td></tr>';
+  }).join("")||'<tr><td colspan="5" class="muted">Hali parda yo\'q. «+ Yangi parda qo\'shish» ni bosing.</td></tr>';
+}
+function showPv(img,el,ph){ el.hidden=!img; ph.hidden=!!img; if(img) el.src=imgSrc(img); }
+function openProd(id){
+  if(!data.categories.length){ toast("Avval «Toifalar» bo'limida toifa qo'shing",true); return; }
+  editP=id; var p=data.products.filter(function(x){return x.id===id})[0]||{};
+  var f=$("#pForm"); fillCatSel($("#pCat"),p.cat||($("#fCat").value||data.categories[0].id));
+  var c=catOf(f.cat.value);
+  f.name.value=p.name||""; f.price.value=p.price||""; f.desc.value=p.desc||"";
+  f.c1.value=p.c1||c.c1||"#b9a98c"; f.c2.value=p.c2||c.c2||"#efe8da"; f.hidden.checked=!!p.hidden;
+  pImg=p.img||""; showPv(pImg,$("#pImg"),$("#pPh")); $("#pFile").value="";
+  $("#dpT").textContent=id?"Pardani tahrirlash":"Yangi parda";
+  $("#dProd").classList.add("open"); f.name.focus();
+}
+$("#pForm").addEventListener("submit",function(e){
+  e.preventDefault(); var f=e.target;
+  var p=data.products.filter(function(x){return x.id===editP})[0];
+  if(!p){ p={id:slug(f.name.value)+"-"+uid()}; data.products.unshift(p); }
+  p.name=f.name.value.trim(); p.cat=f.cat.value; p.price=+f.price.value||0; p.desc=f.desc.value.trim();
+  p.c1=f.c1.value; p.c2=f.c2.value; p.img=pImg; p.hidden=f.hidden.checked;
+  $("#dProd").classList.remove("open"); touch(); renderAll(); toast("Parda saqlandi (oxirida «💾 Saqlash» ni bosing)");
+});
+$("#pFile").addEventListener("change",function(e){ var fl=e.target.files[0]; if(!fl) return; resize(fl).then(function(d){ pImg=d; showPv(pImg,$("#pImg"),$("#pPh")); }).catch(function(){toast("Rasmni o'qib bo'lmadi",true)}); });
+$("#pImgDel").addEventListener("click",function(){ pImg=""; showPv("",$("#pImg"),$("#pPh")); $("#pFile").value=""; });
+
+/* TOIFALAR */
+function renderCats(){
+  $("#tCat").innerHTML=data.categories.map(function(c,i){
+    var n=data.products.filter(function(p){return p.cat===c.id}).length;
+    var th=c.img?'<img class="th" src="'+esc(imgSrc(c.img))+'" alt="">':'<span class="th" style="--c1:'+esc(c.c1)+';--c2:'+esc(c.c2)+'"></span>';
+    return '<tr><td>'+th+'</td><td><b>'+esc(c.name)+'</b></td><td>'+n+'</td><td><input type="checkbox" data-cf="'+esc(c.id)+'"'+(c.featured?" checked":"")+'></td>'+
+      '<td><div class="acts"><button class="btn btn--sm" data-cu="'+i+'" '+(i?"":"disabled")+'>↑</button><button class="btn btn--sm" data-ce="'+esc(c.id)+'">Tahrirlash</button><button class="btn btn--sm btn--red" data-cd="'+esc(c.id)+'">O\'chirish</button></div></td></tr>';
+  }).join("")||'<tr><td colspan="5" class="muted">Toifa yo\'q.</td></tr>';
+}
+function openCat(id){
+  editC=id; var c=data.categories.filter(function(x){return x.id===id})[0]||{style:"drape",c1:"#1f4d3a",c2:"#c9a24a"};
+  var f=$("#cForm"); f.name.value=c.name||""; f.style.value=c.style||"roll"; f.c1.value=c.c1||"#b9a98c"; f.c2.value=c.c2||"#efe8da"; f.featured.checked=!!c.featured;
+  cImg=c.img||""; showPv(cImg,$("#cImg"),$("#cPh")); $("#cFile").value="";
+  $("#dCat").classList.add("open"); f.name.focus();
+}
+$("#cForm").addEventListener("submit",function(e){
+  e.preventDefault(); var f=e.target;
+  var c=data.categories.filter(function(x){return x.id===editC})[0];
+  if(!c){ var id=slug(f.name.value); if(data.categories.some(function(x){return x.id===id})) id+="-"+uid(); c={id:id}; data.categories.push(c); }
+  c.name=f.name.value.trim(); c.style=f.style.value; c.c1=f.c1.value; c.c2=f.c2.value; c.img=cImg; c.featured=f.featured.checked;
+  $("#dCat").classList.remove("open"); touch(); renderAll();
+});
+$("#cFile").addEventListener("change",function(e){ var fl=e.target.files[0]; if(!fl) return; resize(fl).then(function(d){ cImg=d; showPv(cImg,$("#cImg"),$("#cPh")); }); });
+$("#cImgDel").addEventListener("click",function(){ cImg=""; showPv("",$("#cImg"),$("#cPh")); $("#cFile").value=""; });
+
+/* VIDEOLAR */
+function renderVids(){
+  $("#vList").innerHTML=data.videos.map(function(v,i){
+    var ok=igPermalink(v.url);
+    return '<div class="vid"><span class="vid__i"></span><div class="vid__t"><b>'+esc(v.title||"Sarlavhasiz video")+'</b><br><a href="'+esc(v.url)+'" target="_blank" rel="noopener">'+esc(v.url)+'</a>'+(ok?"":' <span class="err">havola noto\'g\'ri</span>')+'</div>'+
+      '<div class="acts"><button class="btn btn--sm" data-vu="'+i+'" '+(i?"":"disabled")+'>↑</button><button class="btn btn--sm" data-vt="'+i+'">Sarlavha</button><button class="btn btn--sm btn--red" data-vd="'+i+'">O\'chirish</button></div></div>';
+  }).join("")||'<p class="muted">Hali video qo\'shilmagan.</p>';
+}
+$("#vForm").addEventListener("submit",function(e){
+  e.preventDefault(); var u=$("#vUrl").value.trim(), link=igPermalink(u);
+  if(!link){ $("#vErr").textContent="Bu Instagram post yoki Reels havolasi emas"; return; }
+  if(data.videos.some(function(v){return igPermalink(v.url)===link})){ $("#vErr").textContent="Bu video allaqachon qo'shilgan"; return; }
+  $("#vErr").textContent=""; data.videos.unshift({id:uid(),url:link,title:$("#vTitle").value.trim()});
+  $("#vUrl").value=""; $("#vTitle").value=""; touch(); renderVids(); toast("Video qo'shildi");
+});
+
+/* ISHLARIMIZ (galereya) */
+function renderGal(){
+  $("#gList").innerHTML=data.gallery.map(function(g,i){
+    return '<div class="gi"><img src="'+esc(g.img)+'" alt=""><input data-gt="'+i+'" value="'+esc(g.title||"")+'" placeholder="Izoh (masalan: Plisse, Yunusobod)">'+
+      '<div class="acts"><span><button class="btn btn--sm" data-gu="'+i+'" '+(i?"":"disabled")+'>←</button> <button class="btn btn--sm" data-gd2="'+i+'" '+(i<data.gallery.length-1?"":"disabled")+'>→</button></span><button class="btn btn--sm btn--red" data-gd="'+i+'">O\'chirish</button></div></div>';
+  }).join("")||'<p class="muted">Hali rasm yo\'q.</p>';
+}
+$("#gFile").addEventListener("change",async function(e){
+  var fs=Array.prototype.slice.call(e.target.files);
+  for(var i=0;i<fs.length;i++){ try{ data.gallery.unshift({img:await resize(fs[i]),title:""}); }catch(x){ toast("Rasmni o'qib bo'lmadi",true); } }
+  e.target.value=""; touch(); renderGal(); if(fs.length) toast(fs.length+" ta rasm qo'shildi");
+});
+$("#gList").addEventListener("input",function(e){ var i=e.target.dataset.gt; if(i==null) return; data.gallery[+i].title=e.target.value; touch(); });
+
+/* O'RNATISH VA HUDUDLAR */
+function toLines(a){ return (a||[]).map(function(x){ return typeof x==="string"?x:(x.title+(x.text?" | "+x.text:"")); }).join("\n"); }
+function fromPairs(t){ return t.split("\n").map(function(l){ l=l.trim(); if(!l) return null; var k=l.indexOf("|"); return k<0?{title:l,text:""}:{title:l.slice(0,k).trim(),text:l.slice(k+1).trim()}; }).filter(Boolean); }
+function renderInfo(){
+  $("[data-i=steps]").value=toLines(data.steps);
+  $("[data-i=measureTips]").value=toLines(data.measureTips);
+  $("[data-i=areas]").value=toLines(data.areas);
+  $("[data-i=areasNote]").value=data.settings.areasNote||"";
+}
+$("#iForm").addEventListener("input",function(e){
+  var k=e.target.dataset.i; if(!k) return; var v=e.target.value;
+  if(k==="areasNote") data.settings.areasNote=v;
+  else if(k==="areas") data.areas=v.split("\n").map(function(x){return x.trim()}).filter(Boolean);
+  else data[k]=fromPairs(v);
+  touch();
+});
+
+/* SOZLAMALAR */
+var FIELDS=[
+  ["heroTitle","Bosh sahifa sarlavhasi"],["heroText","Sarlavha ostidagi matn","ta"],
+  ["phone","Telefon"],["address","Manzil"],["workTime","Ish vaqti"],
+  ["telegram","Telegram (username, masalan famous_jalyuzi)"],["instagram","Instagram (username yoki havola)"],
+  ["mapUrl","Xarita havolasi (Google/Yandex xarita → Ulashish → Embed/iframe kodi yoki src havolasi)","ta"],
+  ["workshopText","«Bizning Sex» matni","ta"],
+  ["leadEndpoint","Ariza yuboriladigan manzil (Formspree va h.k., ixtiyoriy). Bo'sh bo'lsa ariza Telegram orqali keladi"]
+];
+function renderSet(){
+  var s=data.settings;
+  $("#sForm").innerHTML=FIELDS.map(function(f){
+    return '<label>'+esc(f[1])+(f[2]?'<textarea rows="3" data-s="'+f[0]+'">'+esc(s[f[0]]||"")+'</textarea>':'<input data-s="'+f[0]+'" value="'+esc(s[f[0]]||"")+'">')+'</label>';
+  }).join("")+
+  '<div class="pv"><img id="hImg" alt="" hidden><div class="ph" id="hPh"></div><div class="form" style="gap:8px"><label>Bosh sahifa rasmi (keng, gorizontal)<input type="file" accept="image/*" id="hFile"></label><button type="button" class="btn btn--sm btn--red" id="hDel">Rasmni olib tashlash</button></div></div>';
+  showPv(s.heroImg,$("#hImg"),$("#hPh"));
+}
+$("#sForm").addEventListener("input",function(e){ var k=e.target.dataset.s; if(!k) return; data.settings[k]=e.target.value; touch(); });
+$("#sForm").addEventListener("change",function(e){
+  if(e.target.id!=="hFile") return; var fl=e.target.files[0]; if(!fl) return;
+  resize(fl).then(function(d){ data.settings.heroImg=d; showPv(d,$("#hImg"),$("#hPh")); touch(); });
+});
+$("#sForm").addEventListener("click",function(e){ if(e.target.id==="hDel"){ data.settings.heroImg=""; showPv("",$("#hImg"),$("#hPh")); touch(); } });
+
+function renderAll(){ fillCatSel($("#fCat"),$("#fCat").value,true); renderProd(); renderCats(); renderGal(); renderInfo(); renderVids(); renderSet(); renderNote(); }
+
+/* tugmalar */
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button,input[type=checkbox]"); if(!t) return; var d=t.dataset;
+  if(d.tab){ $$(".tab").forEach(function(b){b.classList.toggle("on",b===t)}); $$("[data-p]").forEach(function(p){p.hidden=p.dataset.p!==d.tab}); return; }
+  if(d.x!=null){ t.closest(".dlg").classList.remove("open"); return; }
+  if(d.pe) return openProd(d.pe);
+  if(d.ph){ var p=data.products.filter(function(x){return x.id===d.ph})[0]; p.hidden=!p.hidden; touch(); renderProd(); return; }
+  if(d.pd){ var p2=data.products.filter(function(x){return x.id===d.pd})[0]; if(confirm("«"+p2.name+"» o'chirilsinmi?")){ data.products=data.products.filter(function(x){return x!==p2}); touch(); renderAll(); } return; }
+  if(d.ce) return openCat(d.ce);
+  if(d.cf){ catOf(d.cf).featured=t.checked; touch(); return; }
+  if(d.cu){ var i=+d.cu, a=data.categories; a.splice(i-1,0,a.splice(i,1)[0]); touch(); renderAll(); return; }
+  if(d.cd){ var n=data.products.filter(function(x){return x.cat===d.cd}).length;
+    if(n){ toast("Bu toifada "+n+" ta parda bor. Avval ularni o'chiring yoki boshqa toifaga o'tkazing",true); return; }
+    if(confirm("Toifa o'chirilsinmi?")){ data.categories=data.categories.filter(function(x){return x.id!==d.cd}); touch(); renderAll(); } return; }
+  if(d.gu){ var gi=+d.gu, ga=data.gallery; ga.splice(gi-1,0,ga.splice(gi,1)[0]); touch(); renderGal(); return; }
+  if(d.gd2){ var gj=+d.gd2, gb=data.gallery; gb.splice(gj+1,0,gb.splice(gj,1)[0]); touch(); renderGal(); return; }
+  if(d.gd){ if(confirm("Rasm galereyadan o'chirilsinmi?")){ data.gallery.splice(+d.gd,1); touch(); renderGal(); } return; }
+  if(d.vu){ var j=+d.vu, v=data.videos; v.splice(j-1,0,v.splice(j,1)[0]); touch(); renderVids(); return; }
+  if(d.vt){ var vv=data.videos[+d.vt]; var nt=prompt("Video sarlavhasi:",vv.title||""); if(nt!=null){ vv.title=nt.trim(); touch(); renderVids(); } return; }
+  if(d.vd){ if(confirm("Video ro'yxatdan o'chirilsinmi?")){ data.videos.splice(+d.vd,1); touch(); renderVids(); } return; }
+});
+$("#addProd").addEventListener("click",function(){ openProd(null); });
+$("#addCat").addEventListener("click",function(){ openCat(null); });
+$("#fCat").addEventListener("change",renderProd);
+$("#fQ").addEventListener("input",renderProd);
+$$(".dlg").forEach(function(dl){ dl.addEventListener("click",function(e){ if(e.target===dl) dl.classList.remove("open"); }); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") $$(".dlg").forEach(function(dl){dl.classList.remove("open")}); });
+
+/* papka (File System Access API) */
+function idb(){return new Promise(function(res,rej){var r=indexedDB.open("fj_admin",1);r.onupgradeneeded=function(){r.result.createObjectStore("h")};r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}})}
+function idbGet(){return idb().then(function(db){return new Promise(function(res){var q=db.transaction("h").objectStore("h").get("dir");q.onsuccess=function(){res(q.result)};q.onerror=function(){res(null)}})}).catch(function(){return null})}
+function idbSet(h){return idb().then(function(db){return new Promise(function(res){var tx=db.transaction("h","readwrite");tx.objectStore("h").put(h,"dir");tx.oncomplete=res;tx.onerror=res})}).catch(function(){})}
+async function perm(h,ask){ var o={mode:"readwrite"}; if(await h.queryPermission(o)==="granted") return true; return ask?(await h.requestPermission(o))==="granted":false; }
+async function readDirJson(h){ var fh=await h.getFileHandle("data.json"); return JSON.parse(await (await fh.getFile()).text()); }
+
+$("#bConnect").addEventListener("click",async function(){
+  if(typeof window.showDirectoryPicker!=="function") return toast("Bu brauzer papka ulashni qo'llamaydi. Chrome yoki Edge ishlating",true);
+  try{
+    var h=await window.showDirectoryPicker({mode:"readwrite"});
+    try{ await h.getFileHandle("index.html"); }catch(e){ if(!confirm("Bu papkada index.html yo'q. Baribir shu papkani ulaymi?")) return; }
+    dir=h; await idbSet(h);
+    try{ var d=await readDirJson(h); if(!dirty || confirm("Papkadagi data.json ni yuklaymi? (saqlanmagan o'zgarishlar yo'qoladi)")){ data=norm(d); dirty=false; localStorage.removeItem(DRAFT); setSt("data.json papkadan o'qildi","ok"); } }catch(e){}
+    renderAll(); toast("Papka ulandi");
+  }catch(e){ if(e&&e.name!=="AbortError") toast("Papkani ulab bo'lmadi",true); }
+});
+
+async function writeImg(dataUrl,name){
+  var imgs=await dir.getDirectoryHandle("images",{create:true});
+  var blob=await (await fetch(dataUrl)).blob();
+  var fn=slug(name)+"-"+uid()+".jpg";
+  var fh=await imgs.getFileHandle(fn,{create:true}); var w=await fh.createWritable(); await w.write(blob); await w.close();
+  return "images/"+fn;
+}
+function json(){ return JSON.stringify(data,null,2)+"\n"; }
+
+$("#bSave").addEventListener("click",async function(){
+  if(!dir){ toast("Papka ulanmagan: data.json yuklab olinmoqda. Uni sayt papkasidagi data.json o'rniga qo'ying"); return download(); }
+  try{
+    if(!(await perm(dir,true))) return toast("Papkaga yozishga ruxsat berilmadi",true);
+    setSt("Saqlanmoqda...");
+    for(var i=0;i<data.products.length;i++){ var p=data.products[i]; if(p.img&&p.img.indexOf("data:")===0) p.img=await writeImg(p.img,p.name); }
+    for(var j=0;j<data.categories.length;j++){ var c=data.categories[j]; if(c.img&&c.img.indexOf("data:")===0) c.img=await writeImg(c.img,"toifa-"+c.name); }
+    for(var g=0;g<data.gallery.length;g++){ var gg=data.gallery[g]; if(gg.img&&gg.img.indexOf("data:")===0) gg.img=await writeImg(gg.img,"ish-"+(gg.title||"rasm")); }
+    if(data.settings.heroImg&&data.settings.heroImg.indexOf("data:")===0) data.settings.heroImg=await writeImg(data.settings.heroImg,"hero");
+    var fh=await dir.getFileHandle("data.json",{create:true}); var w=await fh.createWritable(); await w.write(json()); await w.close();
+    dirty=false; localStorage.removeItem(DRAFT); setSt("Saqlandi ✓","ok"); renderAll(); toast("Saqlandi: data.json va rasmlar papkaga yozildi");
+  }catch(e){ console.error(e); setSt("Saqlanmadi","dirty"); toast("Saqlab bo'lmadi: "+(e.message||e.name),true); }
+});
+function download(){
+  var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([json()],{type:"application/json"})); a.download="data.json";
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(a.href)},1500);
+}
+$("#bDownload").addEventListener("click",download);
+$("#bPreview").addEventListener("click",function(){
+  try{ localStorage.setItem(PREVIEW,JSON.stringify(data)); }catch(e){ return toast("Ko'rib chiqish uchun xotira yetmadi (rasmlar juda ko'p). Avval saqlang",true); }
+  window.open("index.html?preview=1","_blank");
+});
+
+/* boshlash: qoralama → ulangan papka → data.json (server orqali) */
+(async function init(){
+  var draft=null; try{ draft=JSON.parse(localStorage.getItem(DRAFT)); }catch(e){}
+  var h=await idbGet(); if(h){ dir=h; }
+  if(draft){ data=norm(draft); dirty=true; setSt("Saqlanmagan qoralama tiklandi","dirty"); }
+  else{
+    if(dir && await perm(dir,false)){ try{ data=norm(await readDirJson(dir)); setSt("data.json papkadan o'qildi","ok"); }catch(e){} }
+    if(!data){ try{ var r=await fetch("data.json?v="+Date.now(),{cache:"no-store"}); if(r.ok){ data=norm(await r.json()); setSt("data.json o'qildi","ok"); } }catch(e){} }
+    if(!data){ data=norm(null); setSt("data.json topilmadi: papkani ulang","dirty"); }
+  }
+  if(dir && !(await perm(dir,false))) $("#note").dataset.reconnect="1";
+  renderAll();
+})();
+})();
+</script>
+</body>
+</html>

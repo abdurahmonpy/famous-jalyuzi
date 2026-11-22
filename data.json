@@ -1,0 +1,280 @@
+{
+  "settings": {
+    "brand": "Famous Jalyuzi",
+    "heroTitle": "Har bir derazada quvonch, har bir uyda farog'at",
+    "heroText": "Plisse jalyuzi, pardalar va setkalar: o'z seximizda, sizning o'lchamingizda tayyorlanadi.",
+    "heroImg": "images/bej-plisse-tashqi.jpg",
+    "phone": "+998 99 764-70-70",
+    "address": "Toshkent shahri, manzil keyin kiritiladi",
+    "workTime": "Har kuni 09:00 – 20:00",
+    "telegram": "https://t.me/jaluzi_famous",
+    "instagram": "https://www.instagram.com/famous.jalyuzi/",
+    "mapUrl": "",
+    "leadEndpoint": "",
+    "workshopText": "Barcha pardalar va jalyuzilar o'zimizning sexda, zamonaviy uskunalarda tayyorlanadi. Usta uyingizga kelib bepul o'lchab beradi, tayyor mahsulotni o'zi o'rnatadi.",
+    "areasNote": "Usta quyidagi hududlarga bepul boradi. Ro'yxatda bo'lmasa ham qo'ng'iroq qiling, kelishamiz."
+  },
+  "areas": [
+    "Yunusobod",
+    "Mirzo Ulug'bek",
+    "Chilonzor",
+    "Yakkasaroy",
+    "Mirobod",
+    "Shayxontohur",
+    "Olmazor",
+    "Uchtepa",
+    "Yashnobod",
+    "Sergeli",
+    "Bektemir",
+    "Yangihayot",
+    "Toshkent viloyati"
+  ],
+  "steps": [
+    {
+      "title": "Ariza qoldirasiz",
+      "text": "Saytdan, Telegram yoki telefon orqali. Qulay kun va vaqtni kelishamiz."
+    },
+    {
+      "title": "Usta bepul o'lchaydi",
+      "text": "Usta mato va rang namunalari bilan keladi, derazani aniq o'lchaydi va narxni joyida aytadi."
+    },
+    {
+      "title": "Sexda tayyorlaymiz",
+      "text": "Buyurtma o'z seximizda 1–3 kunda, aynan sizning o'lchamingizda tayyorlanadi."
+    },
+    {
+      "title": "O'rnatamiz",
+      "text": "Usta 30–60 daqiqada o'rnatadi. Plisse ramaga burg'ulamasdan o'rnatiladi. Ishdan keyin joy toza qoladi."
+    }
+  ],
+  "measureTips": [
+    {
+      "title": "Shisha bo'yicha o'lchang",
+      "text": "Plisse va rama ichidagi jalyuzi uchun shisha ko'rinib turgan qismini, shtapikdan shtapikkacha o'lchang."
+    },
+    {
+      "title": "3 joydan o'lchang",
+      "text": "Enini tepadan, o'rtadan va pastdan; bo'yini chapdan va o'ngdan o'lchang. Eng kichigini yozing."
+    },
+    {
+      "title": "Har tavaqa alohida",
+      "text": "Ochiladigan va ochilmaydigan qismlar alohida o'lchanadi. Har birini raqamlab yozing."
+    },
+    {
+      "title": "Santimetrda yozing",
+      "text": "Eni × bo'yi (masalan 62 × 145 sm) va derazaning rasmini Telegram'ga yuboring."
+    },
+    {
+      "title": "Shubha bo'lsa — ustani chaqiring",
+      "text": "O'lchov bepul. Noto'g'ri o'lchamdan ko'ra ustani chaqirish arzonroq."
+    }
+  ],
+  "categories": [
+    {
+      "id": "plisse",
+      "name": "Plisse Jalyuzilar",
+      "style": "pleat",
+      "c1": "#d9ccb4",
+      "c2": "#f3ece0",
+      "img": "images/krem-plisse.jpg",
+      "featured": true
+    },
+    {
+      "id": "dk",
+      "name": "DK Pardalar",
+      "style": "drape",
+      "c1": "#1f4d3a",
+      "c2": "#c9a24a",
+      "img": "",
+      "featured": true
+    },
+    {
+      "id": "zebra",
+      "name": "Kun-tun (Zebra)",
+      "style": "zebra",
+      "c1": "#8a8173",
+      "c2": "#efe9df",
+      "img": "images/zebra-va-plisse.jpg",
+      "featured": true
+    },
+    {
+      "id": "setka",
+      "name": "Ruchnoy Setkalar",
+      "style": "mesh",
+      "c1": "#5b5f63",
+      "c2": "#dfe3e6",
+      "img": "",
+      "featured": false
+    }
+  ],
+  "products": [
+    {
+      "id": "plisse-krem",
+      "cat": "plisse",
+      "name": "Plisse Krem",
+      "price": 140000,
+      "c1": "#d9ccb4",
+      "c2": "#f3ece0",
+      "img": "images/krem-plisse.jpg",
+      "desc": "Yumshoq yorug'lik, har qanday interyerga mos.",
+      "hidden": false
+    },
+    {
+      "id": "plisse-bej",
+      "cat": "plisse",
+      "name": "Plisse Bej",
+      "price": 140000,
+      "c1": "#cdb99a",
+      "c2": "#efe4d2",
+      "img": "images/bej-plisse-tashqi.jpg",
+      "desc": "Kechqurun ham ichkari ko'rinmaydi.",
+      "hidden": false
+    },
+    {
+      "id": "plisse-kulrang",
+      "cat": "plisse",
+      "name": "Plisse Kulrang",
+      "price": 145000,
+      "c1": "#9a9690",
+      "c2": "#dcd9d3",
+      "img": "images/kulrang-plisse.jpg",
+      "desc": "Antratsit romlar bilan chiroyli uyg'unlashadi.",
+      "hidden": false
+    },
+    {
+      "id": "plisse-oq",
+      "cat": "plisse",
+      "name": "Plisse Oq",
+      "price": 140000,
+      "c1": "#e3e6ea",
+      "c2": "#f6f7f9",
+      "img": "images/oq-plisse.jpg",
+      "desc": "Xonani yorug' va keng ko'rsatadi.",
+      "hidden": false
+    },
+    {
+      "id": "plisse-grafit",
+      "cat": "plisse",
+      "name": "Plisse Grafit",
+      "price": 150000,
+      "c1": "#4a4f57",
+      "c2": "#9aa0a8",
+      "img": "images/oshxona-grafit-plisse.jpg",
+      "desc": "To'q rang, oshxona va kabinet uchun.",
+      "hidden": false
+    },
+    {
+      "id": "plisse-jigarrang",
+      "cat": "plisse",
+      "name": "Plisse Jigarrang",
+      "price": 150000,
+      "c1": "#6b5444",
+      "c2": "#b49a85",
+      "img": "images/jigarrang-plisse.jpg",
+      "desc": "Yog'och rangli romlar uchun.",
+      "hidden": false
+    },
+    {
+      "id": "plisse-eshik",
+      "cat": "plisse",
+      "name": "Eshik uchun plisse",
+      "price": 145000,
+      "c1": "#bdb4a3",
+      "c2": "#e8e3d8",
+      "img": "images/eshik-plisse.jpg",
+      "desc": "Balkon va kirish eshiklari uchun, eshik ochilganda ham qimirlamaydi.",
+      "hidden": false
+    },
+    {
+      "id": "zebra-oq",
+      "cat": "zebra",
+      "name": "Zebra Oq",
+      "price": 210000,
+      "c1": "#9a9a9a",
+      "c2": "#f2f2f2",
+      "img": "images/zebra-va-plisse.jpg",
+      "desc": "Kun va tun rejimi bitta pardada.",
+      "hidden": false
+    },
+    {
+      "id": "dk-1",
+      "cat": "dk",
+      "name": "Emerald Velvet",
+      "price": 185000,
+      "c1": "#1f4d3a",
+      "c2": "#c9a24a",
+      "img": "",
+      "desc": "Baxmal, qorong'ilashtiruvchi. Tilla bog'ich bilan.",
+      "hidden": false
+    },
+    {
+      "id": "dk-2",
+      "cat": "dk",
+      "name": "Sahro Beige",
+      "price": 160000,
+      "c1": "#b79b74",
+      "c2": "#efe4d2",
+      "img": "",
+      "desc": "Yengil, yorug'likni yumshoq o'tkazadi.",
+      "hidden": false
+    },
+    {
+      "id": "setka-1",
+      "cat": "setka",
+      "name": "Klassik Setka",
+      "price": 95000,
+      "c1": "#5b5f63",
+      "c2": "#dfe3e6",
+      "img": "",
+      "desc": "Alyuminiy rama, chivindan himoya.",
+      "hidden": false
+    }
+  ],
+  "gallery": [
+    {
+      "img": "images/bej-plisse-tashqi.jpg",
+      "title": "Bej plisse, xususiy uy"
+    },
+    {
+      "img": "images/zal-kulrang-plisse.jpg",
+      "title": "Zal: 4 ta eshik-deraza, plisse"
+    },
+    {
+      "img": "images/kulrang-plisse.jpg",
+      "title": "Kulrang plisse, antratsit rom"
+    },
+    {
+      "img": "images/zebra-va-plisse.jpg",
+      "title": "Zebra va plisse birga"
+    },
+    {
+      "img": "images/krem-plisse.jpg",
+      "title": "Krem plisse, yotoqxona"
+    },
+    {
+      "img": "images/oshxona-grafit-plisse.jpg",
+      "title": "Grafit plisse, oshxona"
+    },
+    {
+      "img": "images/jigarrang-plisse.jpg",
+      "title": "Jigarrang plisse, yog'och rom"
+    },
+    {
+      "img": "images/oq-plisse.jpg",
+      "title": "Oq plisse, mehmonxona"
+    },
+    {
+      "img": "images/eshik-plisse.jpg",
+      "title": "Eshik va fortochka uchun plisse"
+    },
+    {
+      "img": "images/jigarrang-eshik-plisse.jpg",
+      "title": "Balkon eshigi, plisse"
+    },
+    {
+      "img": "images/yogoch-rom-plisse.jpg",
+      "title": "Ochiladigan tavaqada plisse"
+    }
+  ],
+  "videos": []
+}
