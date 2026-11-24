@@ -108,7 +108,7 @@ input[type=checkbox]{width:auto}
 
   <section class="box" data-p="cats" hidden>
     <div class="bar"><button class="btn btn--green" id="addCat">+ Yangi toifa</button><span class="muted">“Bosh sahifada” belgilangan toifalar “Eng xaridorgir toifalar” blokida chiqadi.</span></div>
-    <table><thead><tr><th>Rasm</th><th>Nomi</th><th>Mahsulot</th><th>Bosh sahifada</th><th></th></tr></thead><tbody id="tCat"></tbody></table>
+    <table><thead><tr><th>Rasm</th><th>Nomi</th><th>Mahsulot</th><th>Kalkulyator (1 m²)</th><th>Bosh sahifada</th><th></th></tr></thead><tbody id="tCat"></tbody></table>
   </section>
 
   <section class="box" data-p="vids" hidden>
@@ -193,6 +193,7 @@ input[type=checkbox]{width:auto}
     <div class="pv"><img id="cImg" alt="" hidden><div class="ph" id="cPh"></div>
       <div class="form" style="gap:8px"><label>Rasm<input type="file" accept="image/*" id="cFile"></label><button type="button" class="btn btn--sm btn--red" id="cImgDel">Rasmni olib tashlash</button></div>
     </div>
+    <label>Kalkulyator uchun eng arzon narx, so‘m / 1 m² (0 yoki bo‘sh bo‘lsa, kalkulyatorda chiqmaydi)<input type="number" name="price" min="0" step="1000"></label>
     <label class="chk"><input type="checkbox" name="featured"> Bosh sahifadagi “Eng xaridorgir toifalar”da ko'rsatish</label>
     <div class="acts"><button type="button" class="btn" data-x>Bekor</button><button class="btn btn--gold">Tayyor</button></div>
   </form>
@@ -295,13 +296,13 @@ function renderCats(){
   $("#tCat").innerHTML=data.categories.map(function(c,i){
     var n=data.products.filter(function(p){return p.cat===c.id}).length;
     var th=c.img?'<img class="th" src="'+esc(imgSrc(c.img))+'" alt="">':'<span class="th" style="--c1:'+esc(c.c1)+';--c2:'+esc(c.c2)+'"></span>';
-    return '<tr><td>'+th+'</td><td><b>'+esc(c.name)+'</b></td><td>'+n+'</td><td><input type="checkbox" data-cf="'+esc(c.id)+'"'+(c.featured?" checked":"")+'></td>'+
+    return '<tr><td>'+th+'</td><td><b>'+esc(c.name)+'</b></td><td>'+n+'</td><td>'+(+c.price>0?fmt(c.price)+" so‘m":"—")+'</td><td><input type="checkbox" data-cf="'+esc(c.id)+'"'+(c.featured?" checked":"")+'></td>'+
       '<td><div class="acts"><button class="btn btn--sm" data-cu="'+i+'" '+(i?"":"disabled")+'>↑</button><button class="btn btn--sm" data-ce="'+esc(c.id)+'">Tahrirlash</button><button class="btn btn--sm btn--red" data-cd="'+esc(c.id)+'">O\'chirish</button></div></td></tr>';
-  }).join("")||'<tr><td colspan="5" class="muted">Toifa yo\'q.</td></tr>';
+  }).join("")||'<tr><td colspan="6" class="muted">Toifa yo\'q.</td></tr>';
 }
 function openCat(id){
   editC=id; var c=data.categories.filter(function(x){return x.id===id})[0]||{style:"drape",c1:"#1f4d3a",c2:"#c9a24a"};
-  var f=$("#cForm"); f.name.value=c.name||""; f.style.value=c.style||"roll"; f.c1.value=c.c1||"#b9a98c"; f.c2.value=c.c2||"#efe8da"; f.featured.checked=!!c.featured;
+  var f=$("#cForm"); f.name.value=c.name||""; f.style.value=c.style||"roll"; f.c1.value=c.c1||"#b9a98c"; f.c2.value=c.c2||"#efe8da"; f.featured.checked=!!c.featured; f.price.value=c.price||"";
   cImg=c.img||""; showPv(cImg,$("#cImg"),$("#cPh")); $("#cFile").value="";
   $("#dCat").classList.add("open"); f.name.focus();
 }
@@ -309,7 +310,7 @@ $("#cForm").addEventListener("submit",function(e){
   e.preventDefault(); var f=e.target;
   var c=data.categories.filter(function(x){return x.id===editC})[0];
   if(!c){ var id=slug(f.name.value); if(data.categories.some(function(x){return x.id===id})) id+="-"+uid(); c={id:id}; data.categories.push(c); }
-  c.name=f.name.value.trim(); c.style=f.style.value; c.c1=f.c1.value; c.c2=f.c2.value; c.img=cImg; c.featured=f.featured.checked;
+  c.name=f.name.value.trim(); c.style=f.style.value; c.c1=f.c1.value; c.c2=f.c2.value; c.img=cImg; c.featured=f.featured.checked; c.price=+f.price.value||0;
   $("#dCat").classList.remove("open"); touch(); renderAll();
 });
 $("#cFile").addEventListener("change",function(e){ var fl=e.target.files[0]; if(!fl) return; resize(fl).then(function(d){ cImg=d; showPv(cImg,$("#cImg"),$("#cPh")); }); });
@@ -368,6 +369,7 @@ var FIELDS=[
   ["phone","Telefon"],["address","Manzil"],["workTime","Ish vaqti"],
   ["telegram","Telegram (username, masalan famous_jalyuzi)"],["instagram","Instagram (username yoki havola)"],
   ["mapUrl","Xarita havolasi (Google/Yandex xarita → Ulashish → Embed/iframe kodi yoki src havolasi)","ta"],
+  ["calcNote","Kalkulyator ostidagi izoh","ta"],
   ["workshopText","«Bizning Sex» matni","ta"],
   ["leadEndpoint","Ariza yuboriladigan manzil (Formspree va h.k., ixtiyoriy). Bo'sh bo'lsa ariza Telegram orqali keladi"]
 ];

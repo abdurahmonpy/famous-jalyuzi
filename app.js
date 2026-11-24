@@ -95,7 +95,10 @@ function renderContacts(){
   var ph=$("#sPhone"); ph.textContent=s.phone||""; ph.href="tel:"+String(s.phone||"").replace(/[^\d+]/g,"");
   var map=$("#map"), u=String(s.mapUrl||"").trim();
   var m=u.match(/src="([^"]+)"/); if(m) u=m[1];   /* <iframe> kodi tashlansa ham ishlaydi */
-  if(/^https:\/\//.test(u)) map.innerHTML='<iframe src="'+esc(u)+'" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Xarita"></iframe>';
+  var hasMap=/^https:\/\//.test(u);
+  if(hasMap) map.innerHTML='<iframe src="'+esc(u)+'" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Xarita"></iframe>';
+  var si=$("#storeImg"); si.hidden=!s.storeImg; if(s.storeImg) si.src=s.storeImg;
+  map.hidden=!hasMap && !!s.storeImg;   /* do'kon rasmi bo'lsa, bo'sh xarita joyi ko'rsatilmaydi */
   $("#year").textContent=new Date().getFullYear();
 }
 
@@ -124,7 +127,40 @@ function renderAreas(){
   $(".areas").hidden=!a.length;
 }
 
-function renderAll(){ renderHero(); renderFeatured(); renderChips(); renderGrid(); renderGallery(); renderSteps(); renderVideos(); renderContacts(); renderAreas(); }
+/* kalkulyator: tur (01, 02, 03...) + metrda o'lcham */
+var calcCat=null;
+function calcTypes(){ return (D.categories||[]).filter(function(c){ return +c.price>0; }); }
+function code(i){ return (i+1<10?"0":"")+(i+1); }
+function renderCalc(){
+  var ts=calcTypes();
+  $("#kalkulyator").hidden=!ts.length;
+  var nl=$('.nav a[href="#kalkulyator"]'); if(nl) nl.hidden=!ts.length;
+  if(!ts.length) return;
+  if(!calcCat || !ts.some(function(c){return c.id===calcCat})) calcCat=ts[0].id;
+  $("#ctypes").innerHTML=ts.map(function(c,i){
+    var first=visible().filter(function(p){return p.cat===c.id&&p.img})[0];
+    var img=c.img||(first&&first.img)||"";
+    return '<button type="button" class="ctype'+(c.id===calcCat?" on":"")+'" role="radio" aria-checked="'+(c.id===calcCat)+'" data-ctype="'+esc(c.id)+'">'+
+      '<span class="ctype__img">'+media(img,c.style,c.c1,c.c2,c.name)+'<i class="ctype__n">'+code(i)+'</i></span>'+
+      '<span class="ctype__b"><b>'+esc(c.name)+'</b><small>1 m² — '+fmt(c.price)+' so\'mdan</small></span></button>';
+  }).join("");
+  $("#cNote").textContent=(D.settings&&D.settings.calcNote)||"";
+  calc();
+}
+function num(v){ return parseFloat(String(v).replace(",","."))||0; }
+function calc(){
+  var ts=calcTypes(), i=-1; ts.forEach(function(c,k){ if(c.id===calcCat) i=k; });
+  var c=ts[i];
+  var w=num($("#cW").value), h=num($("#cH").value), q=Math.max(1,Math.round(num($("#cQ").value))||1);
+  var area=Math.max(w*h,1);   /* 1 dona uchun eng kamida 1 m² */
+  var sum=c?area*q*c.price:0;
+  $("#cType").textContent=c?code(i)+" · "+c.name:"—";
+  $("#cRes").textContent=fmt(sum)+" so'mdan";
+  $("#cArea").textContent=c?(w.toFixed(2)+" × "+h.toFixed(2)+" m = "+(w*h).toFixed(2)+" m²"+(w*h<1?" (hisob 1 m²)":"")+" × "+q+" dona × "+fmt(c.price)+" so'm"):"";
+  return {c:c,code:c?code(i):"",w:w,h:h,q:q,sum:sum};
+}
+
+function renderAll(){ renderHero(); renderFeatured(); renderChips(); renderGrid(); renderCalc(); renderGallery(); renderSteps(); renderVideos(); renderContacts(); renderAreas(); }
 
 /* buyurtma oynasi */
 var modal=$("#modal");
@@ -166,14 +202,17 @@ document.addEventListener("click",function(e){
   var gf=e.target.closest("[data-gi]"); if(gf) return lbShow(+gf.dataset.gi);
   if(e.target.closest("[data-lbx]")||e.target.id==="lb") return lbClose();
   var ln=e.target.closest("[data-lbn]"); if(ln) return lbShow(galIdx+(+ln.dataset.lbn));
-  var t=e.target.closest("[data-order],[data-close],[data-cat],[data-chip],[data-buy]");
+  var t=e.target.closest("[data-order],[data-close],[data-cat],[data-chip],[data-buy],[data-ctype],#cOrder");
   if(!t) return;
   if(t.hasAttribute("data-order")) return openOrder("");
   if(t.hasAttribute("data-close")) return closeOrder();
   if(t.dataset.cat){ curCat=t.dataset.cat; renderChips(); renderGrid(); $("#katalog").scrollIntoView({behavior:"smooth"}); return; }
   if(t.dataset.chip){ curCat=t.dataset.chip; renderChips(); renderGrid(); return; }
+  if(t.dataset.ctype){ calcCat=t.dataset.ctype; $$(".ctype").forEach(function(b){ var on=b.dataset.ctype===calcCat; b.classList.toggle("on",on); b.setAttribute("aria-checked",on); }); calc(); return; }
+  if(t.id==="cOrder"){ var r=calc(); return openOrder(r.c?(r.code+" "+r.c.name+": "+r.w+" × "+r.h+" m, "+r.q+" dona ≈ "+fmt(r.sum)+" so'mdan"):""); }
   if(t.dataset.buy){ var p=visible().filter(function(x){return x.id===t.dataset.buy})[0]; return openOrder(p?(catOf(p.cat).name||"")+": "+p.name:""); }
 });
+["#cW","#cH","#cQ"].forEach(function(s){ $(s).addEventListener("input",calc); });
 document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){ closeOrder(); closeNav(); lbClose(); }
   if($("#lb").classList.contains("open")){ if(e.key==="ArrowRight") lbShow(galIdx+1); if(e.key==="ArrowLeft") lbShow(galIdx-1); }

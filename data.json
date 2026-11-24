@@ -12,7 +12,9 @@
     "mapUrl": "",
     "leadEndpoint": "",
     "workshopText": "Barcha pardalar va jalyuzilar o'zimizning sexda, zamonaviy uskunalarda tayyorlanadi. Usta uyingizga kelib bepul o'lchab beradi, tayyor mahsulotni o'zi o'rnatadi.",
-    "areasNote": "Usta quyidagi hududlarga bepul boradi. Ro'yxatda bo'lmasa ham qo'ng'iroq qiling, kelishamiz."
+    "areasNote": "Usta quyidagi hududlarga bepul boradi. Ro'yxatda bo'lmasa ham qo'ng'iroq qiling, kelishamiz.",
+    "storeImg": "images/dokon.jpg",
+    "calcNote": "Narxlar eng arzon materialdan boshlab ko'rsatilgan. Aniq narxni usta bepul o'lchagandan keyin aytamiz."
   },
   "areas": [
     "Yunusobod",
@@ -71,31 +73,34 @@
   ],
   "categories": [
     {
+      "id": "dk",
+      "name": "Dike jalyuzi",
+      "style": "drape",
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-02.jpg",
+      "featured": true,
+      "price": 300000
+    },
+    {
+      "id": "zebra",
+      "name": "Kombo (kun-tun)",
+      "style": "zebra",
+      "c1": "#8a8173",
+      "c2": "#efe9df",
+      "img": "images/kombo-01.jpg",
+      "featured": true,
+      "price": 120000
+    },
+    {
       "id": "plisse",
       "name": "Plisse Jalyuzilar",
       "style": "pleat",
       "c1": "#d9ccb4",
       "c2": "#f3ece0",
       "img": "images/krem-plisse.jpg",
-      "featured": true
-    },
-    {
-      "id": "dk",
-      "name": "DK Pardalar",
-      "style": "drape",
-      "c1": "#1f4d3a",
-      "c2": "#c9a24a",
-      "img": "",
-      "featured": true
-    },
-    {
-      "id": "zebra",
-      "name": "Kun-tun (Zebra)",
-      "style": "zebra",
-      "c1": "#8a8173",
-      "c2": "#efe9df",
-      "img": "images/zebra-va-plisse.jpg",
-      "featured": true
+      "featured": true,
+      "price": 140000
     },
     {
       "id": "setka",
@@ -104,10 +109,143 @@
       "c1": "#5b5f63",
       "c2": "#dfe3e6",
       "img": "",
-      "featured": false
+      "featured": false,
+      "price": 0
     }
   ],
   "products": [
+    {
+      "id": "dike-01",
+      "cat": "dk",
+      "name": "Dike 01",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-01.jpg",
+      "desc": "To'q ko'k + tyul, naqshli",
+      "hidden": false
+    },
+    {
+      "id": "dike-02",
+      "cat": "dk",
+      "name": "Dike 02",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-02.jpg",
+      "desc": "Grafit + tyul, kumush naqsh",
+      "hidden": false
+    },
+    {
+      "id": "dike-03",
+      "cat": "dk",
+      "name": "Dike 03",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-03.jpg",
+      "desc": "Qora-pushti + tyul",
+      "hidden": false
+    },
+    {
+      "id": "dike-04",
+      "cat": "dk",
+      "name": "Dike 04",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-04.jpg",
+      "desc": "Firuza + tyul",
+      "hidden": false
+    },
+    {
+      "id": "dike-05",
+      "cat": "dk",
+      "name": "Dike 05",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-05.jpg",
+      "desc": "Kulrang, yotoqxona",
+      "hidden": false
+    },
+    {
+      "id": "dike-06",
+      "cat": "dk",
+      "name": "Dike 06",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-06.jpg",
+      "desc": "Jigarrang + tyul, zinapoya",
+      "hidden": false
+    },
+    {
+      "id": "dike-07",
+      "cat": "dk",
+      "name": "Dike 07",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-07.jpg",
+      "desc": "Tilla + naqshli tyul",
+      "hidden": false
+    },
+    {
+      "id": "dike-08",
+      "cat": "dk",
+      "name": "Dike 08",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-08.jpg",
+      "desc": "Kulrang + tyul, mehmonxona",
+      "hidden": false
+    },
+    {
+      "id": "dike-09",
+      "cat": "dk",
+      "name": "Dike 09",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-09.jpg",
+      "desc": "Bej + tyul, oshxona",
+      "hidden": false
+    },
+    {
+      "id": "dike-10",
+      "cat": "dk",
+      "name": "Dike 10",
+      "price": 300000,
+      "c1": "#1f2a3a",
+      "c2": "#e9e6df",
+      "img": "images/dike-10.jpg",
+      "desc": "Qora-oq + naqshli tyul",
+      "hidden": false
+    },
+    {
+      "id": "kombo-02",
+      "cat": "zebra",
+      "name": "Kombo 02",
+      "price": 120000,
+      "c1": "#8a8a8a",
+      "c2": "#f0f0f0",
+      "img": "images/kombo-02.jpg",
+      "desc": "Kulrang kombo, deraza",
+      "hidden": false
+    },
+    {
+      "id": "kombo-03",
+      "cat": "zebra",
+      "name": "Kombo 03",
+      "price": 120000,
+      "c1": "#8a8a8a",
+      "c2": "#f0f0f0",
+      "img": "images/kombo-03.jpg",
+      "desc": "Kulrang kombo, xona",
+      "hidden": false
+    },
     {
       "id": "plisse-krem",
       "cat": "plisse",
@@ -188,34 +326,12 @@
     {
       "id": "zebra-oq",
       "cat": "zebra",
-      "name": "Zebra Oq",
-      "price": 210000,
+      "name": "Kombo 01",
+      "price": 120000,
       "c1": "#9a9a9a",
       "c2": "#f2f2f2",
       "img": "images/zebra-va-plisse.jpg",
-      "desc": "Kun va tun rejimi bitta pardada.",
-      "hidden": false
-    },
-    {
-      "id": "dk-1",
-      "cat": "dk",
-      "name": "Emerald Velvet",
-      "price": 185000,
-      "c1": "#1f4d3a",
-      "c2": "#c9a24a",
-      "img": "",
-      "desc": "Baxmal, qorong'ilashtiruvchi. Tilla bog'ich bilan.",
-      "hidden": false
-    },
-    {
-      "id": "dk-2",
-      "cat": "dk",
-      "name": "Sahro Beige",
-      "price": 160000,
-      "c1": "#b79b74",
-      "c2": "#efe4d2",
-      "img": "",
-      "desc": "Yengil, yorug'likni yumshoq o'tkazadi.",
+      "desc": "Kombo va plisse birga",
       "hidden": false
     },
     {
@@ -231,6 +347,18 @@
     }
   ],
   "gallery": [
+    {
+      "img": "images/dike-04.jpg",
+      "title": "Dike jalyuzi, firuza"
+    },
+    {
+      "img": "images/kombo-03.jpg",
+      "title": "Kombo, kulrang"
+    },
+    {
+      "img": "images/dike-06.jpg",
+      "title": "Dike, zinapoya"
+    },
     {
       "img": "images/bej-plisse-tashqi.jpg",
       "title": "Bej plisse, xususiy uy"

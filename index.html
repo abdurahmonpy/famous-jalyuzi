@@ -22,6 +22,7 @@
     </a>
     <nav class="nav" id="nav">
       <a href="#katalog">Katalog</a>
+      <a href="#kalkulyator">Kalkulyator</a>
       <a href="#ishlar">Ishlarimiz</a>
       <a href="#videolar" hidden>Videolar</a>
       <a href="#dokon">Do'kon</a>
@@ -67,6 +68,28 @@
       <div class="chips" id="chips" role="tablist"></div>
       <div class="grid" id="grid"></div>
       <p class="empty" id="empty" hidden>Bu toifada hozircha mahsulot yo'q.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--green" id="kalkulyator">
+    <div class="wrap">
+      <span class="kicker center-block">Kalkulyator</span>
+      <h2 class="h2 center">Narxni hisoblang</h2>
+      <p class="sub center calc-sub">1. Turni tanlang &nbsp;·&nbsp; 2. Derazaning enini va bo'yini metrda kiriting</p>
+      <div class="ctypes" id="ctypes" role="radiogroup" aria-label="Jalyuzi turi"></div>
+      <div class="cbox">
+        <div class="cbox__in">
+          <label>Eni (metr)<input id="cW" type="text" inputmode="decimal" autocomplete="off" value="1.5" placeholder="masalan 1.5"></label>
+          <span class="cx">×</span>
+          <label>Bo'yi (metr)<input id="cH" type="text" inputmode="decimal" autocomplete="off" value="2" placeholder="masalan 2.1"></label>
+          <label class="cq">Soni<input id="cQ" type="number" inputmode="numeric" min="1" max="50" value="1"></label>
+        </div>
+        <div class="cres">
+          <div><span id="cType">—</span><b id="cRes">0 so'm</b><small id="cArea"></small></div>
+          <button type="button" class="btn btn--gold" id="cOrder">Shu hisob bilan buyurtma</button>
+        </div>
+        <p class="cnote" id="cNote"></p>
+      </div>
     </div>
   </section>
 
@@ -155,7 +178,8 @@
           <ul id="areas"></ul>
         </div>
       </div>
-      <div class="map" id="map"><div class="map__ph">Xarita havolasi admin paneldan kiritiladi</div></div>
+      <div class="dokon-r"><img class="dokon-img" id="storeImg" alt="Famous Jalyuzi do'koni" loading="lazy" hidden>
+      <div class="map" id="map"><div class="map__ph">Xarita havolasi admin paneldan kiritiladi</div></div></div>
     </div>
   </section>
 </main>
